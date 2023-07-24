@@ -5,12 +5,13 @@ class Cartao
     attr_reader :numero, :validade, :cvc, :funcao, :is_bloqueado, :usuario
 
     def initialize(usuario, funcao = TipoCartao::CREDITO)
-        @numero = 1250
+        @numero = gerar_novo_numero()
         @validade = definir_validade()
         @cvc = gerar_cvc()
         @funcao = funcao
         @is_bloqueado = false
         @usuario = usuario
+        vincular_usuario()
     end
 
     def trocarStatusBloqueado()
@@ -27,9 +28,14 @@ class Cartao
 
     protected
 
+    # TODO: adicionar ao diagrama
+    def vincular_usuario()
+        usuario.adicionar_cartao(self)
+    end
+
     def definir_validade()
-        data_de_criacao = Time.now
-        puts(data_de_criacao)
+        data_de_validade = Time.now.year + 5
+        return data_de_validade
     end
 
     def gerar_cvc()
@@ -38,6 +44,12 @@ class Cartao
     end
 
     def gerar_novo_numero()
+        numeros = ''
 
+        16.times do 
+            numeros += rand(10).to_s
+        end
+
+        return numeros
     end
 end
