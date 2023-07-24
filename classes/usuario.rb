@@ -4,6 +4,7 @@ class Usuario
     def initialize(nome, cpf)
         @nome = nome
         @cpf = cpf
+        @cartoes = []
     end
 
     def trocar_nome(novo_nome)
