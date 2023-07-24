@@ -3,6 +3,6 @@ class Usuario
     attr_reader :CPF
 
     def setNome(nome)
-        @nome = nome;
+        
     end
 end
