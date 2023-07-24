@@ -4,7 +4,7 @@ class Cartao
     include TipoCartao
     attr_reader :numero, :validade, :cvc, :funcao, :is_bloqueado, :usuario
 
-    def initialize(usuario = nil, funcao = TipoCartao::CREDITO)
+    def initialize(usuario, funcao = TipoCartao::CREDITO)
         @numero = 1250
         @validade = definir_validade()
         @cvc = gerar_cvc()
