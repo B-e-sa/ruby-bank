@@ -1,5 +1,5 @@
 def Conta
-    attr_reader :saldoDisponivel :faturaAtual
+    attr_reader :saldoDisponivel, :faturaAtual, :usuario
 
     def initialize
 

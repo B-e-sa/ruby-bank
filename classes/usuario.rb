@@ -1,5 +1,5 @@
 class Usuario
-    attr_reader :nome, :cpf
+    attr_reader :nome, :cpf, :cartoes
 
     def initialize
     
