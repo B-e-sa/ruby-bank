@@ -10,7 +10,7 @@ class Usuario
         @nome = novoNome
     end
 
-    def adicionarCartao(Cartao)
-        cartoes.push(Cartao)
+    def adicionarCartao(cartao)
+        cartoes.push(cartao)
     end
 end
