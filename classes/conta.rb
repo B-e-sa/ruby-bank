@@ -5,7 +5,7 @@ def Conta
 
     end
 
-    def AdicionarSaldo()
+    def adicionarSaldo(valor)
 
     end
 
