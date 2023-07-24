@@ -1,4 +1,4 @@
-def Conta
+class Conta
     attr_reader :saldoDisponivel, :faturaAtual, :usuario
 
     def initialize(usuario, saldoDisponivel = 0)
