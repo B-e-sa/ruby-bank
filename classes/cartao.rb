@@ -2,19 +2,19 @@ require_relative '../modules/tipo_cartao'
 
 class Cartao
     include TipoCartao
-    attr_reader :numero, :validade, :cvc, :funcao, :isBloqueado, :usuario
+    attr_reader :numero, :validade, :cvc, :funcao, :is_bloqueado, :usuario
 
     def initialize(usuario = nil, funcao = TipoCartao::CREDITO)
         @numero = 1250
-        @validade = definirValidade()
-        @cvc = gerarCvc()
+        @validade = definir_validade()
+        @cvc = gerar_cvc()
         @funcao = funcao
-        @isBloqueado = false
+        @is_bloqueado = false
         @usuario = usuario
     end
 
     def trocarStatusBloqueado()
-        @isBloqueado = !@isBloqueado
+        @is_bloqueado = !@is_bloqueado
     end
 
     def trocarFuncaoAtual() 
@@ -27,17 +27,17 @@ class Cartao
 
     protected
 
-    def definirValidade()
-        dataDeCriacao = Time.now
-        puts(dataDeCriacao)
+    def definir_validade()
+        data_de_criacao = Time.now
+        puts(data_de_criacao)
     end
 
-    def gerarCvc()
+    def gerar_cvc()
         cvc = "#{rand(10)}#{rand(10)}#{rand(10)}"
         return cvc
     end
 
-    def gerarNovoNumero()
-        
+    def gerar_novo_numero()
+
     end
 end

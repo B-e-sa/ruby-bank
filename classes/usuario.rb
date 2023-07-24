@@ -6,11 +6,11 @@ class Usuario
         @cpf = cpf
     end
 
-    def trocarNome(novoNome)
-        @nome = novoNome
+    def trocar_nome(novo_nome)
+        @nome = novo_nome
     end
 
-    def adicionarCartao(cartao)
+    def adicionar_cartao(cartao)
         cartoes.push(cartao)
     end
 end

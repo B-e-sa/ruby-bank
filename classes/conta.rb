@@ -1,17 +1,17 @@
 class Conta
-    attr_reader :saldoDisponivel, :faturaAtual, :usuario
+    attr_reader :saldo_disponivel, :fatura_atual, :usuario
 
-    def initialize(usuario, saldoDisponivel = 0)
+    def initialize(usuario, saldo_disponivel = 0)
         @usuario = usuario
-        @saldoDisponivel = saldoDisponivel
-        @faturaAtual = 0
+        @saldo_disponivel = saldo_disponivel
+        @fatura_atual = 0
     end
 
-    def adicionarSaldo(valor)
-        @saldoDisponivel += valor
+    def adicionar_saldo(valor)
+        @saldo_disponivel += valor
     end
 
-    def setFaturaAtual(valor)
-        @faturaAtual += valor
+    def set_fatura_atual(valor)
+        @fatura_atual += valor
     end
 end 
