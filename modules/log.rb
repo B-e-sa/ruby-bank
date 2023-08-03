@@ -1,5 +1,11 @@
 module Log
     module User 
+        def self.nenhum_usuario_cadastrado
+            puts "Ainda não há usuários cadastrados. Deseja criar um?"
+            puts "1: Sim"
+            puts "2: Não, sair"
+        end
+
         def self.opcoes
             puts '1: Alterar meu nome'
             puts '2: Excluir meu usuário'
@@ -16,6 +22,10 @@ module Log
         
         def self.escolha_nome
             print('Escolha seu novo nome: ')
+        end
+
+        def self.insira_login
+            print('Para entrar, insira o CPF de sua conta: ')
         end
 
         def self.nome_alterado_sucesso(nome)
