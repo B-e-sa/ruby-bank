@@ -1,32 +1,69 @@
 require_relative './classes/conta'
 require_relative './classes/usuario'
 require_relative './classes/cartao'
+require_relative './modules/log'
+require_relative './modules/app'
 
-puts('------ Usuário ------')
-novoUsuario = Usuario.new('Pedro', '12345678900')
-puts("Username: " + novoUsuario.nome)
-puts("CPF: " + novoUsuario.cpf)
-puts(' ')
+while true
+    if users.empty?
+        Log::User::nenhum_usuario_cadastrado
 
-puts('------ Conta ------')
-novaConta = Conta.new(novoUsuario)
-puts("Saldo Disponível: " + novaConta.saldo_disponivel.to_s)
-novaConta.adicionar_saldo(100)
-puts("Saldo após depósito: " + novaConta.saldo_disponivel.to_s)
-puts("Fatura Atual: " + novaConta.fatura_atual.to_s)
-puts(' ')
+        if Log::get_int == 1
+            App::Usuario::cadastrar users
+            next
+        end
 
-puts('------ Cartao ------')
-novoCartao1 = Cartao.new(novoUsuario)
-puts("Número: " + novoCartao1.numero)
-puts("CVC: " + novoCartao1.cvc)
-puts("Funcao atual: " + novoCartao1.funcao.to_s)
-puts("Cartão bloqueado? " + novoCartao1.is_bloqueado.to_s)
-puts("Data de validade: " + novoCartao1.validade.to_s) # mm/yy
-puts(' ')
+        break
+    end
 
-puts('------ Cartão <-> Usuário ------')
-novoCartao2 = Cartao.new(novoUsuario)
-puts(novoUsuario.cartoes[0].cvc)
-puts(novoUsuario.cartoes[1].cvc)
-puts(' ')
+    App::Usuario::login users
+
+    break
+
+    Log::intercalar_bloco do
+        Log::introducao
+        Log::opcoes
+    end
+
+    user = Usuario.new "pedro", "12345678900"
+
+    case Log::get_int
+        when 1
+
+            Log::limpar
+            
+            Log::intercalar_bloco do
+                Log::User::mostrar_usuario user
+                Log::User::opcoes
+            end
+
+            if Log::get_int == 1
+
+                Log::intercalar_bloco do
+                    Log::User::escolha_nome
+                    user.trocar_nome Log::get_input
+                end
+
+                Log::User::nome_alterado_sucesso user.nome
+                sleep 2
+
+                Log::limpar
+            else
+                # TODO: Excluir usuário
+            end
+        when 2
+            Log::limpar
+
+            Log::Conta::opcoes
+
+        when 3
+            Log::limpar
+
+            Log::Cartao::opcoes
+        else
+            break
+    end
+
+    next
+
+end
