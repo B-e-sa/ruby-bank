@@ -5,6 +5,7 @@ class Cartao
     attr_reader :numero, :validade, :cvc, :funcao, :is_bloqueado, :usuario
 
     def initialize(usuario, funcao = TipoCartao::CREDITO)
+        @users = App.instance
         @numero = gerar_novo_numero()
         @validade = definir_validade()
         @cvc = gerar_cvc()
@@ -18,10 +19,10 @@ class Cartao
         @is_bloqueado = !@is_bloqueado
     end
 
-    def trocarFuncaoAtual() 
+    def trocarFuncaoAtual()
         if @funcao == TipoCartao::CREDITO
             @funcao = TipoCartao::DEBITO
-        else 
+        else
             @funcao = TipoCartao::CREDITO
         end
     end
@@ -46,7 +47,7 @@ class Cartao
     def gerar_novo_numero()
         numeros = ''
 
-        16.times do 
+        16.times do
             numeros += rand(10).to_s
         end
 

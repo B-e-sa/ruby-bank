@@ -1,5 +1,30 @@
-module Log
-    module User 
+module Logger
+    def self.log message
+        puts message
+    end
+
+    def self.log_line message
+        print message
+    end
+
+    module User
+        def self.informacao_usuario usuario
+            puts "> Usuário"
+            puts "  - Nome: #{usuario.nome}"
+            puts "  - CPF: #{usuario.cpf}"
+        end
+
+        def self.tem_cer1teza
+            puts '1: Sim'
+            puts '2: Não'
+        end
+
+        def self.deseja_continuar
+            puts "Deseja continuar?"
+            puts "1: Sim"
+            puts "2: Não, sair"
+        end
+
         def self.nenhum_usuario_cadastrado
             puts "Ainda não há usuários cadastrados. Deseja criar um?"
             puts "1: Sim"
@@ -11,30 +36,15 @@ module Log
             puts '2: Excluir meu usuário'
         end
 
-        def self.escolha_nome
-            puts 'Escolha seu novo nome de usuário:'
-        end
-
         def self.mostrar_usuario(usuario)
             puts "Nome: #{usuario.nome}"
             puts "Cpf: #{usuario.cpf}"
-        end
-        
-        def self.escolha_nome
-            print('Escolha seu novo nome: ')
-        end
-
-        def self.insira_login
-            print('Para entrar, insira o CPF de sua conta: ')
-        end
-
-        def self.nome_alterado_sucesso(nome)
-            print("Seu nome foi alterado com sucesso, #{nome}!")
         end
     end
 
     module Cartao
         def self.opcoes
+            puts '> Cartão'
             puts '1: Consultar informações de um cartão'
             puts '2: Criar novo cartão'
         end
@@ -42,11 +52,12 @@ module Log
 
     module Conta
         def self.opcoes
+            puts '> Conta'
             puts '1: Adicionar saldo'
             puts '2: Retirar dinheiro'
         end
     end
-    
+
     def self.limpar
         if Gem.win_platform?
             system 'cls'
@@ -59,7 +70,7 @@ module Log
         puts 'Olá! Bem-vindo(a) ao nosso banco. Em que podemos lhe ajudar?'
     end
 
-    def self.line 
+    def self.line
         puts("--------------------------------------")
     end
 
@@ -78,6 +89,7 @@ module Log
     end
 
     def self.opcoes
+        puts 'O que deseja fazer ?'
         puts '1: Meu usuário'
         puts '2: Minha Conta'
         puts '3: Meus cartões'
