@@ -8,15 +8,19 @@ class Conta
         @fatura_atual = 0
     end
 
-    def adicionar_saldo(valor)
+    def adicionar_saldo valor
         @saldo_disponivel += valor
     end
 
-    def subtrair_saldo(valor)
-        @saldo_disponivel -= valor
+    def subtrair_saldo valor
+        if @saldo_disponivel < valor
+            return nil
+        end
+
+        return @saldo_disponivel -= valor
     end
 
-    def set_fatura_atual(valor)
+    def set_fatura_atual valor
         @fatura_atual += valor
     end
 end
