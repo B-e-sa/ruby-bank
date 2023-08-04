@@ -14,19 +14,31 @@ module Logger
     end
 
     def self.get_input
+        print "\n> "
         return gets.chomp
     end
 
     def self.get_int
+        print "\n> "
         return gets.chomp.to_i
     end
 
     def self.opcoes
         puts 'O que deseja fazer ?'
-        puts '1: Meu usuário'
-        puts '2: Minha Conta'
-        puts '3: Meus cartões'
-        puts '4: Encerrar a aplicação'
+        puts ' 1: Meu usuário'
+        puts ' 2: Minha Conta'
+        puts ' 3: Meus cartões'
+        puts ' 4: Encerrar a aplicação'
+    end
+
+    def self.clear_n_log message
+        Logger::limpar
+        puts message
+    end
+
+    def self.clear_n_log_line message
+        Logger::limpar
+        puts message
     end
 
     def self.log message
@@ -38,14 +50,14 @@ module Logger
     end
 
     def self.tem_certeza
-        puts '1: Sim'
-        puts '2: Não'
+        puts ' 1: Sim'
+        puts ' 2: Não'
     end
 
     def self.deseja_continuar
         puts "Deseja continuar?"
-        puts "1: Sim"
-        puts "2: Não, sair"
+        puts " 1: Sim"
+        puts " 2: Não, sair"
     end
 
     module User
@@ -63,13 +75,14 @@ module Logger
 
         def self.nenhum_usuario_cadastrado
             puts "Ainda não há usuários cadastrados. Deseja criar um?"
-            puts "1: Sim"
-            puts "2: Não, sair"
+            puts " 1: Sim"
+            puts " 2: Não, sair"
         end
 
         def self.opcoes
-            puts '1: Alterar meu nome'
-            puts '2: Excluir meu usuário'
+            puts ' 1: Alterar meu nome'
+            puts ' 2: Excluir meu usuário'
+            puts ' 3: Voltar ao início'
         end
 
         def self.mostrar_usuario
@@ -81,8 +94,9 @@ module Logger
     module Cartao
         def self.opcoes
             puts '> Cartão'
-            puts '1: Consultar informações de um cartão'
-            puts '2: Criar novo cartão'
+            puts ' 1: Consultar informações de um cartão'
+            puts ' 2: Criar novo cartão'
+            puts ' 3: Voltar ao início'
         end
     end
 
@@ -94,8 +108,9 @@ module Logger
         end
 
         def self.opcoes
-            puts '1: Adicionar saldo'
-            puts '2: Retirar dinheiro'
+            puts ' 1: Adicionar saldo'
+            puts ' 2: Retirar dinheiro'
+            puts ' 3: Voltar ao início'
         end
     end
 
