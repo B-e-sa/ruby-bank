@@ -1,26 +1,33 @@
 require_relative './Logger'
 require_relative '../classes/usuario'
+require_relative '../modules/tipo_cartao'
 
 module Interface
+    include TipoCartao
     include Logger
 
     def self.init
+        Logger::limpar
         while true
+            # Ainda não há usuários cadastrados. Deseja criar um?
+            #   1: Sim
+            #   2: Não, sair
             if App.instance.users.empty?
                 Logger::User::nenhum_usuario_cadastrado
 
                 if Logger::get_int == 1
                     Logger::limpar
-                    Interface::Usuario::cadastrar
+                    App.instance.register
 
+                    # Usuário cadastrado com sucesso!
                     Logger::limpar
                     Logger::log 'Usuário cadastrado com sucesso!'
                 end
             end
 
-            #if !App.instance.current_user
-                #currentUser = Interface::Usuario::login
-            #end
+            if !App.instance.current_user
+                Interface::Usuario::login
+            end
 
             # O que deseja fazer ?
             #   1: Meu usuário
@@ -38,32 +45,46 @@ module Interface
                 # 1: Alterar meu nome
                 # 2: Excluir meu usuário
                 Logger::limpar
-                App.instance.register 'pedrooo'
-                puts App.instance.users
-                Logger::User::informacao_usuario currentUser
+                Logger::User::informacao_usuario
                 Logger::User::opcoes
 
                 if Logger::get_int == 1
                     Logger::log_line 'Seu novo nome: '
-                    currentUser.trocar_nome Logger::get_input
+                    App.instance.current_user.trocar_nome Logger::get_input
                     Logger::log 'Nome alterado com sucesso!'
                     next
                 else
+                    Logger::log 'Você está prestes a deletar seu usuário. Tem certeza disso?'
+                    Logger::tem_certeza
+
+                    if Logger::get_int == 1
+                        App.instance.excluir_usuario
+                        next
+                    end
+
                     # TODO:
+                    # Voltar ao menu de usuário
+                    # await de 3s
+                    Logger::log 'Exclusão cancelada. Voltando ao menu'
+                    next
                 end
             when 2
                 # > Conta
+                #   - Saldo atual: [saldo_atual]
+                #   - Fatura Atual: [fatura_atual]
+                #
                 #   1: Adicionar saldo
                 #   2: Retirar dinheiro
                 Logger::limpar
+                Logger::Conta::informacao_conta
                 Logger::Conta::opcoes
 
                 if Logger::get_int == 1
                     Logger::log_line 'Insira o valor que deseja adicionar: '
-                    currentUser.conta.adicionar_saldo Logger::get_int
+                    App.instance.current_user.conta.adicionar_saldo Logger::get_int
                 else
                     Logger::log_line 'Insira o valor que deseja retirar: '
-                    currentUser.conta.subtrair_saldo Logger::get_int
+                    App.instance.current_user.conta.subtrair_saldo Logger::get_int
                 end
             when 3
                 # > Cartões
@@ -71,53 +92,16 @@ module Interface
                 #   2: Criar novo cartão
                 Logger::limpar
                 Logger::Cartao::opcoes
-
-                if Logger::get_input == 1
+                if Logger::get_int == 1
 
                 else
-
+                    User.new TipoCartao::CREDITO
+                    App.current_user.adicionar_cartao
                 end
             else
                 break
             end
-
             break
-        end
-    end
-
-    module Usuario
-        def self.cadastrar
-            print "Seu nome: "
-            nome = Logger::get_input
-
-            print "Seu cpf: "
-            cpf = Logger::get_input
-
-            App.instance.register ::Usuario.new nome, cpf
-        end
-
-        def self.login
-            while true
-                Logger::log_line 'Para entrar, insira o CPF de sua conta: '
-
-                cpf = Logger::get_input
-
-            App.instance.users.each do |item|
-                    if item.cpf == cpf
-                        return item
-                    end
-                end
-
-                Logger::limpar
-                Logger::log 'Usuário não encontrado'
-                Logger::User::deseja_continuar
-
-                if Logger::get_input == 2
-                    return nil
-                end
-
-                Logger::limpar
-            end
         end
     end
 end
