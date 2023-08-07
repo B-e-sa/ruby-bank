@@ -21,6 +21,7 @@ module Interface
     #   1: Sim
     #   2: Não, sair
     def self.no_users
+        Logger::limpar
         Logger::User::nenhum_usuario_cadastrado
 
         if Logger::get_int == 1
@@ -29,6 +30,8 @@ module Interface
 
             # Usuário cadastrado com sucesso!
             Logger::clear_n_log 'Usuário cadastrado com sucesso!'
+        else
+            return nil
         end
     end
 
@@ -87,9 +90,18 @@ module Interface
     module Conta
         def self.adicionar_saldo
             Logger::clear_n_log_line 'Insira o valor que deseja adicionar: '
-            App.instance.current_user.conta.adicionar_saldo Logger::get_int
+            valorDiferenteDeZero = App.instance.current_user.conta.adicionar_saldo Logger::get_int
+
+            Logger::limpar
+
+            if !valorDiferenteDeZero
+                Logger::log_line "Você não pode adicionar um saldo nulo"
+                return
+            end
+
             Logger::log 'Saldo adicionado com sucesso'
             Logger::log "Seu saldo atual: #{App.instance.current_user.conta.saldo_disponivel}"
+            Logger::log_line "Você será redirecionado em 3s"
         end
 
         def self.retirar_saldo
@@ -101,15 +113,18 @@ module Interface
                 return
             end
 
+            Logger::limpar
             Logger::log_line 'Valor retirado com sucesso!'
         end
 
         def self.loop
             while true
-                if Logger::get_int == 1
+                Interface::conta
+                opcao = Logger::get_int
+                if opcao == 1
                     Interface::Conta::adicionar_saldo
                     sleep 3
-                elsif Logger::get_int == 1
+                elsif opcao == 2
                     Interface::Conta::retirar_saldo
                     sleep 3
                 else
@@ -128,6 +143,7 @@ module Interface
         end
 
         def self.excluir
+            Logger::limpar
             Logger::log 'Você está prestes a deletar seu usuário. Tem certeza disso?'
             Logger::tem_certeza
 
@@ -136,18 +152,22 @@ module Interface
                 return
             end
 
+            Logger::limpar
             Logger::log 'Exclusão cancelada. Voltando ao menu'
+            sleep 3
         end
 
         def self.loop
             while true
                 Interface::usuario
-                if Logger::get_int == 1
+                opcao = Logger::get_int
+                if opcao == 1
                     Interface::Usuario::alterar_nome
                     sleep 3
-                elsif Logger::get_int == 2
+                elsif opcao == 2
                     Interface::Usuario::excluir
                     sleep 3
+                    break
                 else
                     break
                 end
@@ -158,22 +178,21 @@ module Interface
     def self.init
         while true
             if App.instance.users.empty?
-                Interface::no_users
-            end
-
-            if !App.instance.current_user
-                Interface::Usuario::login
+                deseja_se_logar = Interface::no_users
+                if !deseja_se_logar
+                    return
+                end
             end
 
             Logger::limpar
             Interface::inicio
             case Logger::get_int
             when 1
-                Interface::Usuario::loop
+                Interface::Usuario::loop; next
             when 2
-                Interface::Conta::loop
+                Interface::Conta::loop; next
             when 3
-                Interface::Cartao::loop
+                Interface::Cartao::loop; next
             else
                 break
             end

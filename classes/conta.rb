@@ -9,13 +9,13 @@ class Conta
     end
 
     def adicionar_saldo valor
+        if valor == 0; return nil end
+
         @saldo_disponivel += valor
     end
 
     def subtrair_saldo valor
-        if @saldo_disponivel < valor
-            return nil
-        end
+        if @saldo_disponivel < valor; return nil end
 
         return @saldo_disponivel -= valor
     end
