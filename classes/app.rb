@@ -1,5 +1,6 @@
 require 'singleton'
 require_relative './usuario.rb'
+require_relative './string.rb'
 
 class App
   include Singleton
@@ -10,12 +11,29 @@ class App
     @current_user = nil
   end
 
+  def teste user
+    @users << user
+    @current_user = user
+  end
+
   def register
     print "Seu nome: "
     nome = Logger::get_input
 
-    print "Seu cpf: "
-    cpf = Logger::get_input
+    while true
+      print "Seu cpf: "
+      cpf = Logger::get_input
+
+      if cpf.match(/^(\d{3}).?(\d{3}).?(\d{3})-?(\d{2})$/)
+        break
+      end
+
+      Logger::limpar
+      puts "Seu nome: "
+      Logger::log_line "> #{nome}"
+      Logger::log_line "\n"
+      Logger::log_line "* CPF Inválido\n".red
+    end
 
     user = ::Usuario.new nome, cpf
 
