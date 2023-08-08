@@ -30,6 +30,8 @@ module Interface
 
             # Usuário cadastrado com sucesso!
             Logger::clear_n_log 'Usuário cadastrado com sucesso!'
+
+            return 0
         else
             return nil
         end
@@ -182,6 +184,10 @@ module Interface
                 if !deseja_se_logar
                     return
                 end
+            end
+
+            if !App.instance.current_user
+                Interface::Usuario::login
             end
 
             Logger::limpar
