@@ -19,7 +19,7 @@ class Cartao
         @is_bloqueado = !@is_bloqueado
     end
 
-    def trocarFuncaoAtual
+    def trocar_funcao_atual
         if @funcao == TipoCartao::CREDITO
             @funcao = TipoCartao::DEBITO
         else
@@ -35,13 +35,18 @@ class Cartao
     end
 
     def definir_validade
-        data_de_validade = Time.now.year + 5
-        return data_de_validade
+        data_atual = Time.now
+
+        ano = data_atual.year
+        mes = data_atual.month
+
+        ano_validade = (ano + 5).to_s[2..4]
+
+        return "#{mes}/#{ano_validade}"
     end
 
     def gerar_cvc
-        cvc = "#{rand(10)}#{rand(10)}#{rand(10)}"
-        return cvc
+        return "#{rand(10)}#{rand(10)}#{rand(10)}"
     end
 
     def gerar_novo_numero
