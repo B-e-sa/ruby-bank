@@ -4,14 +4,9 @@ class Usuario
     attr_reader :nome, :cpf, :cartoes, :conta
 
     def initialize(nome, cpf)
-        @users = App.instance
         @nome = nome
         @cpf = cpf
         @cartoes = []
-        vincular_conta()
-    end
-
-    def vincular_conta
         @conta = Conta.new self, 0
     end
 
